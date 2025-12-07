@@ -1,0 +1,70 @@
+---
+import type { GetStaticPaths } from "astro";
+import Pagination from "@/components/control/Pagination.astro";
+import PostPage from "@/components/PostPage.astro";
+import { PAGE_SIZE } from "@/constants/constants";
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import { getSortedPosts } from "@/utils/content-utils";
+
+export const getStaticPaths = (async ({ paginate }) => {
+    const allBlogPosts = await getSortedPosts();
+    
+    // 筛选外汇/黄金相关文章（可按需扩展）
+    const forexPosts = allBlogPosts.filter(post => {
+        // 按分类筛选
+        if (post.data.category === 'forex') return true;
+        
+        // 按标签关键词筛选（扩展性）
+        const forexKeywords = ['forex', '外汇', '黄金', 'xau', 'gbp', 'eur', 'usd', '交易'];
+        const tags = post.data.tags || [];
+        const title = (post.data.title || '').toLowerCase();
+        
+        return forexKeywords.some(keyword => {
+            const keywordLower = keyword.toLowerCase();
+            return title.includes(keywordLower) ||
+                   tags.some(tag => String(tag).toLowerCase().includes(keywordLower));
+        });
+    });
+    
+    return paginate(forexPosts, { pageSize: PAGE_SIZE });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+const len = page ? page.data.length : 0;
+
+// 显示标签（可按需修改）
+const DISPLAY_TAGS = ['外汇', '黄金', 'XAUUSD', 'GBPUSD', '交易策略'];
+---
+
+<MainGridLayout>
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold mb-2">黄金外汇专栏</h1>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">
+            外汇市场分析、黄金交易策略与风险管理
+        </p>
+        
+        <!-- 标签展示（绿色主题） -->
+        <div class="flex flex-wrap gap-2">
+            {DISPLAY_TAGS.map(tag => (
+                <span 
+                    class="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-sm rounded-full transition-colors hover:bg-green-200 dark:hover:bg-green-800"
+                >
+                    #{tag}
+                </span>
+            ))}
+        </div>
+    </div>
+    
+    {
+        page ? (
+            <>
+                <PostPage page={page}></PostPage>
+                <Pagination class="mx-auto onload-animation" page={page} style={`animation-delay: calc(var(--content-delay) + ${len*50}ms)`}></Pagination>
+            </>
+        ) : (
+            <div class="text-center py-12">
+                <p class="text-gray-500 dark:text-gray-400">暂无黄金外汇相关文章</p>
+            </div>
+        )
+    }
+</MainGridLayout>

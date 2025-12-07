@@ -3,7 +3,7 @@ title: "Bitget钱包虚拟卡完整教程：0费用、支持大陆身份证、�
 published: 2025-12-11
 description: "免费申请虚拟海外银行卡，0开卡费0年费，支持大陆身份，线上直接开卡，可订阅GPT和Gemini，从注册到使用全过程教程"
 category: "虚拟卡"
-tags: [Bitget, 虚拟卡, ChatGPT, Gemini, 海外支付,ai]
+tags: [Bitget, 虚拟卡, ChatGPT, Gemini, 海外支付, ai]  # 确保这里有 ai 标签
 ---
 
 # Bitget钱包虚拟卡完整教程

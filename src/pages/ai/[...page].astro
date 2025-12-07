@@ -1,0 +1,103 @@
+---
+import type { GetStaticPaths } from "astro";
+import Pagination from "@/components/control/Pagination.astro";
+import PostPage from "@/components/PostPage.astro";
+import { PAGE_SIZE } from "@/constants/constants";
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import { getCollection } from 'astro:content';
+
+export const getStaticPaths = (async ({ paginate }) => {
+    // 定义AI相关的关键词，用于筛选文章
+    const AI_KEYWORDS = ['ai', 'chatgpt', 'gpt', 'gemini', 'bitget', '虚拟卡'];
+    
+    // 获取所有文章
+    const allPosts = await getCollection('posts');
+    
+    // 筛选包含AI相关关键词的文章
+    const aiPosts = allPosts.filter(post => {
+        const tags = post.data.tags || [];
+        const title = (post.data.title || '').toLowerCase();
+        
+        return AI_KEYWORDS.some(keyword => {
+            const keywordLower = keyword.toLowerCase();
+            return title.includes(keywordLower) ||
+                   tags.some(tag => String(tag).toLowerCase().includes(keywordLower));
+        });
+    });
+    
+    // 按发布时间倒序排序（最新的在前）
+    const sortedPosts = [...aiPosts].sort((a, b) => {
+        return new Date(b.data.published).getTime() - new Date(a.data.published).getTime();
+    });
+    
+    // 返回分页路径
+    return paginate(sortedPosts, { pageSize: PAGE_SIZE });
+}) satisfies GetStaticPaths;
+
+// 从props中获取当前页面的分页数据
+const { page } = Astro.props;
+
+// 在组件模板中需要使用的AI关键词
+const DISPLAY_KEYWORDS = ['AI', 'ChatGPT', 'GPT', 'Gemini'];
+---
+
+<MainGridLayout>
+    <!-- 专栏标题区域 -->
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold mb-2">AI攻略专栏</h1>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">
+            这里汇集AI工具使用教程
+        </p>
+        
+        <!-- 标签展示 -->
+        <div class="flex flex-wrap gap-2">
+            {DISPLAY_KEYWORDS.map(tag => (
+                <span 
+                    class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-sm rounded-full transition-colors hover:bg-blue-200 dark:hover:bg-blue-800"
+                >
+                    #{tag}
+                </span>
+            ))}
+        </div>
+    </div>
+    
+    <!-- 文章内容区域 -->
+    {page?.data?.length > 0 ? (
+        <>
+            <!-- 文章列表 -->
+            <PostPage page={page}></PostPage>
+            
+            <!-- 分页组件 -->
+            <Pagination 
+                class="mx-auto onload-animation" 
+                page={page}
+            ></Pagination>
+        </>
+    ) : (
+        <!-- 无文章时的提示 -->
+        <div class="text-center py-16">
+            <h2 class="text-xl font-semibold mb-3 text-gray-700 dark:text-gray-300">
+                暂无AI相关文章
+            </h2>
+            <p class="text-gray-500 dark:text-gray-400 mb-6">
+                当前检索标签：{DISPLAY_KEYWORDS.join('、')}
+            </p>
+            <div class="max-w-lg mx-auto p-6 bg-gray-50 dark:bg-gray-800 rounded-lg text-left">
+                <h3 class="font-medium mb-2 text-gray-700 dark:text-gray-300">
+                    如何让文章出现在这里？
+                </h3>
+                <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1 list-disc pl-5">
+                    <li>在文章的标签中包含任意AI相关关键词</li>
+                    <li>在文章标题中包含AI相关关键词</li>
+                    <li>关键词包括：{DISPLAY_KEYWORDS.join('、')}等</li>
+                </ul>
+                <div class="mt-4 p-3 bg-gray-100 dark:bg-gray-900 rounded text-xs">
+                    <p class="font-medium mb-1">文章frontmatter示例：</p>
+                    <code class="text-gray-700 dark:text-gray-300">
+                        tags: [Bitget, 虚拟卡, ChatGPT, AI, Gemini]
+                    </code>
+                </div>
+            </div>
+        </div>
+    )}
+</MainGridLayout>

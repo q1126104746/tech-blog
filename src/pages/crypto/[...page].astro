@@ -1,0 +1,104 @@
+---
+import type { GetStaticPaths } from "astro";
+import Pagination from "@/components/control/Pagination.astro";
+import PostPage from "@/components/PostPage.astro";
+import { PAGE_SIZE } from "@/constants/constants";
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import { getCollection } from 'astro:content';
+
+export const getStaticPaths = (async ({ paginate }) => {
+    // 获取所有文章
+    const allPosts = await getCollection('posts');
+    
+    // 筛选加密货币相关文章
+    const cryptoPosts = allPosts.filter(post => {
+        // 按分类筛选
+        if (post.data.category === 'crypto') return true;
+        
+        // 按标签筛选（可自行扩展）
+        const cryptoKeywords = ['crypto', 'bitcoin', 'ethereum', 'blockchain', 'defi', '交易所','Bitget','虚拟卡'];
+        const tags = post.data.tags || [];
+        const title = (post.data.title || '').toLowerCase();
+        
+        return cryptoKeywords.some(keyword => {
+            const keywordLower = keyword.toLowerCase();
+            return title.includes(keywordLower) ||
+                   tags.some(tag => String(tag).toLowerCase().includes(keywordLower));
+        });
+    });
+    
+    // 按发布时间倒序排序（最新的在前）
+    const sortedPosts = [...cryptoPosts].sort((a, b) => {
+        return new Date(b.data.published).getTime() - new Date(a.data.published).getTime();
+    });
+    
+    // 返回分页路径
+    return paginate(sortedPosts, { pageSize: PAGE_SIZE });
+}) satisfies GetStaticPaths;
+
+// 从props中获取当前页面的分页数据
+const { page } = Astro.props;
+
+// 显示标签（可自行修改添加）
+const DISPLAY_TAGS = ['比特币', '以太坊', '区块链', 'DeFi', '交易所'];
+---
+
+<MainGridLayout>
+    <!-- 专栏标题区域 -->
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold mb-2">加密货币专栏</h1>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">
+            区块链技术、数字货币分析与工具教程
+        </p>
+        
+        <!-- 标签展示 -->
+        <div class="flex flex-wrap gap-2">
+            {DISPLAY_TAGS.map(tag => (
+                <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">
+                    #{tag}
+                </span>
+            ))}
+        </div>
+    </div>
+    
+    <!-- 文章内容区域 -->
+    {page?.data?.length > 0 ? (
+        <>
+            <!-- 文章列表 -->
+            <PostPage page={page}></PostPage>
+            
+            <!-- 分页组件 -->
+            <Pagination 
+                class="mx-auto onload-animation" 
+                page={page}
+            ></Pagination>
+        </>
+    ) : (
+        <!-- 无文章时的提示 -->
+        <div class="text-center py-16">
+            <h2 class="text-xl font-semibold mb-3 text-gray-700 dark:text-gray-300">
+                暂无加密货币相关文章
+            </h2>
+            <p class="text-gray-500 dark:text-gray-400 mb-6">
+                当前检索标签：{DISPLAY_TAGS.join('、')}
+            </p>
+            <div class="max-w-lg mx-auto p-6 bg-gray-50 dark:bg-gray-800 rounded-lg text-left">
+                <h3 class="font-medium mb-2 text-gray-700 dark:text-gray-300">
+                    如何让文章出现在这里？
+                </h3>
+                <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1 list-disc pl-5">
+                    <li>设置文章分类为：crypto</li>
+                    <li>在文章的标签中包含加密货币相关关键词</li>
+                    <li>关键词包括：{DISPLAY_TAGS.join('、')}等</li>
+                </ul>
+                <div class="mt-4 p-3 bg-gray-100 dark:bg-gray-900 rounded text-xs">
+                    <p class="font-medium mb-1">文章frontmatter示例：</p>
+                    <code class="text-gray-700 dark:text-gray-300">
+                        category: "crypto"<br/>
+                        tags: [比特币, 以太坊, 区块链, 交易所]
+                    </code>
+                </div>
+            </div>
+        </div>
+    )}
+</MainGridLayout>
