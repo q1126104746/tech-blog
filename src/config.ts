@@ -115,17 +115,17 @@ links: [
 		{
 			name: "YouTube",
 			icon: "fa6-brands:youtube", // YouTube图标
-			url: "https://www.youtube.com/@porter-tech", // 你的YouTube频道链接
+			url: "https://www.youtube.com/@bqlaoli", // 你的YouTube频道链接
 		},
 		{
 			name: "哔哩哔哩",
 			icon: "fa6-brands:bilibili", // B站图标
-			url: "https://space.bilibili.com/363318482", // 你的B站主页链接
+			url: "https://space.bilibili.com/379411619?spm_id_from=333.788.upinfo.detail.click", // 你的B站主页链接
 		},
 		{
 			name: "Telegram",
 			icon: "fa6-brands:telegram", // Telegram图标
-			url: "https://t.me/porter_tech_group", // 你的Telegram群组链接
+			url: "https://t.me/gateiofrong", // 你的Telegram群组链接
 		},
 		// 你可以继续添加其他链接，例如：
 		// {
