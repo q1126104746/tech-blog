@@ -1,0 +1,37 @@
+---
+import type { GetStaticPaths } from "astro";
+import Pagination from "@/components/control/Pagination.astro";
+import PostPage from "@/components/PostPage.astro";
+import { PAGE_SIZE } from "@/constants/constants";
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import { getSortedPosts } from "@/utils/content-utils";
+
+export const getStaticPaths = (async ({ paginate }) => {
+    const allBlogPosts = await getSortedPosts();
+    const cryptoPosts = allBlogPosts.filter(post => post.data.category === 'crypto');
+    return paginate(cryptoPosts, { pageSize: PAGE_SIZE });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+const len = page ? page.data.length : 0;
+---
+
+<MainGridLayout>
+    <div class="mb-6">
+        <h1 class="text-3xl font-bold">加密货币专栏</h1>
+        <p class="text-gray-600 dark:text-gray-400">区块链技术、数字货币分析与工具教程</p>
+    </div>
+    
+    {
+        page ? (
+            <>
+                <PostPage page={page}></PostPage>
+                <Pagination class="mx-auto onload-animation" page={page} style={`animation-delay: calc(var(--content-delay) + ${len*50}ms)`}></Pagination>
+            </>
+        ) : (
+            <div class="text-center py-12">
+                <p class="text-gray-500 dark:text-gray-400">暂无加密货币相关文章</p>
+            </div>
+        )
+    }
+</MainGridLayout>

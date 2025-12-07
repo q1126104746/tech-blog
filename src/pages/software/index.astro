@@ -1,0 +1,37 @@
+---
+import type { GetStaticPaths } from "astro";
+import Pagination from "@/components/control/Pagination.astro";
+import PostPage from "@/components/PostPage.astro";
+import { PAGE_SIZE } from "@/constants/constants";
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import { getSortedPosts } from "@/utils/content-utils";
+
+export const getStaticPaths = (async ({ paginate }) => {
+    const allBlogPosts = await getSortedPosts();
+    const softwarePosts = allBlogPosts.filter(post => post.data.category === 'software');
+    return paginate(softwarePosts, { pageSize: PAGE_SIZE });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+const len = page ? page.data.length : 0;
+---
+
+<MainGridLayout>
+    <div class="mb-6">
+        <h1 class="text-3xl font-bold">软件分享专栏</h1>
+        <p class="text-gray-600 dark:text-gray-400">实用工具推荐、软件教程与效率提升技巧</p>
+    </div>
+    
+    {
+        page ? (
+            <>
+                <PostPage page={page}></PostPage>
+                <Pagination class="mx-auto onload-animation" page={page} style={`animation-delay: calc(var(--content-delay) + ${len*50}ms)`}></Pagination>
+            </>
+        ) : (
+            <div class="text-center py-12">
+                <p class="text-gray-500 dark:text-gray-400">暂无软件分享相关文章</p>
+            </div>
+        )
+    }
+</MainGridLayout>
