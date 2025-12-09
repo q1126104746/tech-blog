@@ -16,7 +16,7 @@ export const getStaticPaths = (async ({ paginate }) => {
         if (post.data.category === 'crypto') return true;
         
         // 按标签筛选（可自行扩展）
-        const cryptoKeywords = ['crypto', 'bitcoin', 'ethereum', 'blockchain', 'defi', '交易所','Bitget','虚拟卡'];
+        const cryptoKeywords = ['crypto', 'bitcoin', 'ethereum', 'blockchain', 'defi', '交易所','Bitget'];
         const tags = post.data.tags || [];
         const title = (post.data.title || '').toLowerCase();
         
