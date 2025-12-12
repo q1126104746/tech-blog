@@ -14,11 +14,15 @@ async function getRawSortedPosts() {
 		const dateB = new Date(b.data.published);
 		return dateA > dateB ? -1 : 1;
 	});
+	//
 	return sorted;
 }
 
 export async function getSortedPosts() {
 	const sorted = await getRawSortedPosts();
+
+	// 🔥 直接在这里过滤：删除所有 hidden=true 的文章
+	
 
 	for (let i = 1; i < sorted.length; i++) {
 		sorted[i].data.nextSlug = sorted[i - 1].slug;

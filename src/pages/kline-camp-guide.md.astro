@@ -2,19 +2,26 @@
 
 import { getEntry, render } from "astro:content";
 import Markdown from "@components/misc/Markdown.astro";
+import type { MarkdownHeading } from "astro";
+import TOC from "../components/widget/TOC.astro";
+import { siteConfig } from "../config";
 import I18nKey from "../i18n/i18nKey";
 import { i18n } from "../i18n/translation";
 import MainGridLayout from "../layouts/MainGridLayout.astro";
 
-const aboutPost = await getEntry("spec", "about");
+const aboutPost = await getEntry("kline", "kline-camp-guide");
 
 if (!aboutPost) {
 	throw new Error("About page content not found");
 }
 
-const { Content } = await render(aboutPost);
+// 使用 render 函数，它返回 { Content, headings }
+const { Content, headings } = await render(aboutPost);
+
+//显示魔力，直接传入headings
 ---
-<MainGridLayout title={i18n(I18nKey.about)} description={i18n(I18nKey.about)}>
+<MainGridLayout title={'k线训练营'} headings={headings}> 
+    
     <div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32">
         <div class="card-base z-10 px-9 py-6 relative w-full ">
             <Markdown class="mt-2">
@@ -23,5 +30,4 @@ const { Content } = await render(aboutPost);
         </div>
     </div>
 
-    
 </MainGridLayout>

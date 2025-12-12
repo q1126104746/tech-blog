@@ -36,6 +36,7 @@ export type SiteConfig = {
 	};
 
 	favicon: Favicon[];
+	
 };
 
 export type Favicon = {

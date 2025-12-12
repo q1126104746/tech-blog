@@ -38,4 +38,5 @@ interface SearchResult {
 	raw_content?: string;
 	raw_url?: string;
 	sub_results?: SearchResult[];
+	
 }

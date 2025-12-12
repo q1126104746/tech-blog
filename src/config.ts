@@ -55,7 +55,7 @@ export const navBarConfig: NavBarConfig = {
 	links: [
 		// 1. 首页（使用预设）
 		LinkPreset.Home,
-		
+
 		// 2. AI攻略（站内栏目）
 		{
 			name: "AI攻略",
@@ -63,15 +63,22 @@ export const navBarConfig: NavBarConfig = {
 			external: false,
 			// icon: "ph:robot", // 可选：添加机器人图标
 		},
-		
+
 		// 3. 加密货币（站内栏目）
 		{
 			name: "加密货币",
-			url: "/crypto/", 
+			url: "/crypto/",
 			external: false,
 			// icon: "ph:currency-btc", // 可选：添加加密货币图标
 		},
-		
+		// 新增：K线训练营（跳转到指定文章）
+		// 在 navBarConfig.links 中添加
+		{
+			name: "K线训练营",
+			url: "/kline-camp-guide.md/", // 指向这篇草稿文章
+			external: false,
+		},
+
 		// 4. 黄金外汇（站内栏目）
 		// {
 		// 	name: "黄金外汇",
@@ -79,7 +86,7 @@ export const navBarConfig: NavBarConfig = {
 		// 	external: false,
 		// 	// icon: "ph:chart-line-up", // 可选：添加趋势图标
 		// },
-		
+
 		// 5. K线技术（站内栏目）
 		// {
 		// 	name: "K线技术",
@@ -87,7 +94,7 @@ export const navBarConfig: NavBarConfig = {
 		// 	external: false,
 		// 	// icon: "ph:candlestick-chart", // 可选：添加K线图图标
 		// },
-		
+
 		// 6. 软件分享（站内栏目）
 		// {
 		// 	name: "软件分享",
@@ -95,13 +102,13 @@ export const navBarConfig: NavBarConfig = {
 		// 	external: false,
 		// 	// icon: "ph:desktop-tower", // 可选：添加电脑图标
 		// },
-		
+
 		// 7. 归档（使用预设）
 		LinkPreset.Archive,
-		
+
 		// 8. 关于（使用预设，可选）
 		// LinkPreset.About,
-		
+
 		// 9. 外部链接：GitHub
 	],
 };
@@ -110,7 +117,7 @@ export const profileConfig: ProfileConfig = {
 	avatar: "assets/images/demo-avatar.png", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
 	name: "李司机",
 	bio: "热爱分享,Youtube中有完整视频教程",
-links: [
+	links: [
 		// 🔽 以下是你的社交链接，请保留你需要的，删除不需要的 🔽
 		{
 			name: "YouTube",
@@ -125,7 +132,7 @@ links: [
 		{
 			name: "Telegram",
 			icon: "fa6-brands:telegram", // Telegram图标
-			url: "https://t.me/gateiofrong", // 你的Telegram群组链接
+			url: "https://t.me/lisiji11", // 你的Telegram群组链接
 		},
 		// 你可以继续添加其他链接，例如：
 		// {
@@ -150,9 +157,9 @@ export const expressiveCodeConfig: ExpressiveCodeConfig = {
 
 // src/config/tags.ts
 export const commonTags = {
-  ai: ["AI", "人工智能", "ChatGPT"],
-  crypto: ["加密货币", "区块链", "比特币"],
-  forex: ["外汇", "黄金", "交易"],
-  kline: ["K线", "技术分析", "图表"],
-  software: ["软件", "工具", "教程"],
+	ai: ["AI", "人工智能", "ChatGPT"],
+	crypto: ["加密货币", "区块链", "比特币"],
+	forex: ["外汇", "黄金", "交易"],
+	kline: ["K线", "技术分析", "图表"],
+	software: ["软件", "工具", "教程"],
 } as const;

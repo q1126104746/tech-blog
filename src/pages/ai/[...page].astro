@@ -41,7 +41,7 @@ const { page } = Astro.props;
 const DISPLAY_KEYWORDS = ['AI', 'ChatGPT', 'GPT', 'Gemini'];
 ---
 
-<MainGridLayout>
+<MainGridLayout title={'AI攻略'}> 
     <!-- 专栏标题区域 -->
     <div class="mb-8">
         <h1 class="text-3xl font-bold mb-2">AI攻略专栏</h1>
@@ -49,16 +49,6 @@ const DISPLAY_KEYWORDS = ['AI', 'ChatGPT', 'GPT', 'Gemini'];
             这里汇集AI工具使用教程
         </p>
         
-        <!-- 标签展示 -->
-        <div class="flex flex-wrap gap-2">
-            {DISPLAY_KEYWORDS.map(tag => (
-                <span 
-                    class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-sm rounded-full transition-colors hover:bg-blue-200 dark:hover:bg-blue-800"
-                >
-                    #{tag}
-                </span>
-            ))}
-        </div>
     </div>
     
     <!-- 文章内容区域 -->
@@ -82,22 +72,6 @@ const DISPLAY_KEYWORDS = ['AI', 'ChatGPT', 'GPT', 'Gemini'];
             <p class="text-gray-500 dark:text-gray-400 mb-6">
                 当前检索标签：{DISPLAY_KEYWORDS.join('、')}
             </p>
-            <div class="max-w-lg mx-auto p-6 bg-gray-50 dark:bg-gray-800 rounded-lg text-left">
-                <h3 class="font-medium mb-2 text-gray-700 dark:text-gray-300">
-                    如何让文章出现在这里？
-                </h3>
-                <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1 list-disc pl-5">
-                    <li>在文章的标签中包含任意AI相关关键词</li>
-                    <li>在文章标题中包含AI相关关键词</li>
-                    <li>关键词包括：{DISPLAY_KEYWORDS.join('、')}等</li>
-                </ul>
-                <div class="mt-4 p-3 bg-gray-100 dark:bg-gray-900 rounded text-xs">
-                    <p class="font-medium mb-1">文章frontmatter示例：</p>
-                    <code class="text-gray-700 dark:text-gray-300">
-                        tags: [Bitget, 虚拟卡, ChatGPT, AI, Gemini]
-                    </code>
-                </div>
-            </div>
         </div>
     )}
 </MainGridLayout>

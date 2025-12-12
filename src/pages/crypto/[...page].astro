@@ -43,7 +43,7 @@ const { page } = Astro.props;
 const DISPLAY_TAGS = ['比特币', '以太坊', '区块链', 'DeFi', '交易所'];
 ---
 
-<MainGridLayout>
+<MainGridLayout title={'加密货币'}>
     <!-- 专栏标题区域 -->
     <div class="mb-8">
         <h1 class="text-3xl font-bold mb-2">加密货币专栏</h1>
@@ -51,14 +51,6 @@ const DISPLAY_TAGS = ['比特币', '以太坊', '区块链', 'DeFi', '交易所'
             区块链技术、数字货币分析与工具教程
         </p>
         
-        <!-- 标签展示 -->
-        <div class="flex flex-wrap gap-2">
-            {DISPLAY_TAGS.map(tag => (
-                <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">
-                    #{tag}
-                </span>
-            ))}
-        </div>
     </div>
     
     <!-- 文章内容区域 -->
@@ -82,23 +74,6 @@ const DISPLAY_TAGS = ['比特币', '以太坊', '区块链', 'DeFi', '交易所'
             <p class="text-gray-500 dark:text-gray-400 mb-6">
                 当前检索标签：{DISPLAY_TAGS.join('、')}
             </p>
-            <div class="max-w-lg mx-auto p-6 bg-gray-50 dark:bg-gray-800 rounded-lg text-left">
-                <h3 class="font-medium mb-2 text-gray-700 dark:text-gray-300">
-                    如何让文章出现在这里？
-                </h3>
-                <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1 list-disc pl-5">
-                    <li>设置文章分类为：crypto</li>
-                    <li>在文章的标签中包含加密货币相关关键词</li>
-                    <li>关键词包括：{DISPLAY_TAGS.join('、')}等</li>
-                </ul>
-                <div class="mt-4 p-3 bg-gray-100 dark:bg-gray-900 rounded text-xs">
-                    <p class="font-medium mb-1">文章frontmatter示例：</p>
-                    <code class="text-gray-700 dark:text-gray-300">
-                        category: "crypto"<br/>
-                        tags: [比特币, 以太坊, 区块链, 交易所]
-                    </code>
-                </div>
-            </div>
         </div>
     )}
 </MainGridLayout>
