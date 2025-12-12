@@ -75,7 +75,7 @@ export const navBarConfig: NavBarConfig = {
 		// 在 navBarConfig.links 中添加
 		{
 			name: "K线训练营",
-			url: "/kline-camp-guide.md/", // 指向这篇草稿文章
+			url: "/kline-camp-guide/", // 指向这篇草稿文章
 			external: false,
 		},
 
