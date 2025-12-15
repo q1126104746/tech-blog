@@ -7,9 +7,9 @@ tags: ["Google Gemini", "AI Pro", "学生认证", "免费套餐", "虚拟卡", "
 author: "admin"
 ---
 ## 视频教程：
-- Youtube视频教程 ：[免费领 1 年 Google Gemini AI Pro！无需实体信用卡、解决身份认证、学生套餐免费订阅12个月Pro全流程]()
+- Youtube视频教程 ：[免费领 1 年 Google Gemini AI Pro！无需实体信用卡、解决身份认证、学生套餐免费订阅12个月Pro全流程](https://youtu.be/T6z1bto1NYA)
 
-- Bilibili视频教程：[免费领 1 年 Google Gemini AI Pro！无需实体信用卡、解决身份认证、学生套餐免费订阅12个月Pro全流程]()
+- Bilibili视频教程：[免费领 1 年 Google Gemini AI Pro！无需实体信用卡、解决身份认证、学生套餐免费订阅12个月Pro全流程](https://www.bilibili.com/video/BV1Rz2DBDEtp/)
 
 - Gemini学生会员成品账号（12个月）：[直接购买](https://accboyllafx.acceboy.com)
 
