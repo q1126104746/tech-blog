@@ -10,8 +10,12 @@ tags: [Bitget, 虚拟卡, ChatGPT, Gemini, 海外支付]  # 确保这里有 ai �
 
 ## 视频教程
 - **Youtube视频教程（完整教程）**：[【2025最新】Bitget钱包虚拟U卡申请教程：0开卡费0年费，费率最低！支持大陆身份线上开卡，订阅GPT/Gemini和支付宝消费全攻略！](https://youtu.be/gbDV3_ZUCjI)
--  **bilibil视频教程**：[【2025最新】Bitget钱包虚拟信用卡申请教程：0开卡费0年费，费率最低！支持大陆身份线上开卡，订阅GPT/Gemini和支付宝消费全攻略！](https://www.bilibili.com/video/BV1Rz2DBDE1k/)
+- **Youtube视频教程（完整教程）**：[Bitget Wallet的虚拟卡使用全流程 | 解决绑定到微信支付宝使用时遇到的问题](https://www.youtube.com/watch?v=TcMM6QAVUw0)
 -  
+
+-  **bilibil视频教程**：[【2025最新】Bitget钱包虚拟信用卡申请教程：0开卡费0年费，费率最低！支持大陆身份线上开卡，订阅GPT/Gemini和支付宝消费全攻略！](https://www.bilibili.com/video/BV1Rz2DBDE1k/)
+
+
 
 ## 配套视频教程
 - 币安注册认证视频教程：[iphone | ios |苹果手机如何注册下载币安交易所！并且进行KYC认证](https://www.youtube.com/shorts/csKq4OqEmNw)
