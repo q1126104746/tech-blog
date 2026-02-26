@@ -1,0 +1,124 @@
+---
+// src/components/OKXCard.astro
+const { 
+  inviteCode = "ok1388", 
+  mainLink = "https://www.okx.com/zh-hans/join/ok1388",
+  backupLink = "https://bn1688.cc/okx",
+  logoUrl = "" 
+} = Astro.props;
+---
+
+<div class="okx-card-final">
+    <div class="card-header">
+        <div class="brand">
+            {logoUrl ? (
+                <img src={logoUrl} alt="OKX Logo" class="logo-img" />
+            ) : (
+                <div class="logo-box">X</div>
+            )}
+            <div class="title-area">
+                <h2 class="title">欧易 OKX</h2>
+                <span class="subtitle">全球领先的加密生态建设者</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="intro-content">
+        <p>成立于2017.5.31，拥有顶尖交易系统及 Web3 Wallet。支持比特币、以太坊等多种现货及衍生品交易，帮助用户快捷管理资产。Web3 钱包提供多链 None-custody 钱包、NFT 市场、DEX 及 DApps。目前在全球拥有超2000万用户，年交易量突破10万亿美元。</p>
+    </div>
+
+    <div class="promo-section">
+        <div class="promo-header">
+            <span class="promo-title">独家注册邀请码</span>
+            <span class="promo-benefit">享受 20% 手续费优惠</span>
+        </div>
+        <div class="copy-box" id="copyBtn" data-code={inviteCode} title="点击复制邀请码">
+            <code class="code-text">{inviteCode}</code>
+            <div class="copy-action">
+                <span class="action-text">点击复制</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="action-row">
+        <a href={mainLink} target="_blank" class="btn main-btn">官网注册入口</a>
+        <a href={backupLink} target="_blank" class="btn sub-btn">免翻墙地址</a>
+    </div>
+</div>
+
+<script>
+    const copyBtn = document.getElementById('copyBtn');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', () => {
+            const code = copyBtn.getAttribute('data-code');
+            if (code) {
+                navigator.clipboard.writeText(code).then(() => {
+                    const actionText = copyBtn.querySelector('.action-text');
+                    if (actionText) {
+                        actionText.textContent = '已复制成功！';
+                        copyBtn.classList.add('is-copied');
+                        setTimeout(() => {
+                            actionText.textContent = '点击复制';
+                            copyBtn.classList.remove('is-copied');
+                        }, 2000);
+                    }
+                });
+            }
+        });
+    }
+</script>
+
+<style>
+    .okx-card-final {
+        border: 1px solid #000;
+        border-radius: 16px;
+        padding: 30px;
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        background: #fff;
+        max-width: 650px;
+        margin: 2rem auto;
+        box-shadow: 8px 8px 0px rgba(0,0,0,0.05);
+    }
+
+    /* 头部 - 居中对齐 */
+    .card-header { display: flex; align-items: center; margin-bottom: 20px; }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .logo-box { width: 40px; height: 40px; background: #000; color: #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 22px; }
+    .logo-img { width: 40px; height: 40px; border-radius: 8px; object-fit: contain; }
+    .title { margin: 0 !important; font-size: 24px !important; font-weight: 800 !important; border: none !important; color: #000 !important; line-height: 1.1 !important; }
+    .subtitle { font-size: 13px; color: #666; margin-top: 2px; }
+
+    /* 简介 */
+    .intro-content { font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 25px; background: #f8f9fa; padding: 15px; border-radius: 10px; }
+    .intro-content p { margin: 0; }
+
+    /* 推广/复制区域 */
+    .promo-section { margin-bottom: 25px; text-align: center; }
+    .promo-header { margin-bottom: 12px; display: flex; flex-direction: column; gap: 4px; }
+    .promo-title { font-size: 14px; color: #888; }
+    .promo-benefit { font-size: 17px; color: #e63946; font-weight: 800; }
+    
+    .copy-box {
+        display: inline-flex; align-items: center; border: 2px solid #000; border-radius: 12px; overflow: hidden; cursor: pointer; transition: all 0.2s;
+    }
+    .copy-box:hover { transform: scale(1.02); }
+    .copy-box.is-copied { border-color: #0ca678; }
+    .code-text { padding: 10px 25px; font-size: 22px; font-weight: 800; background: #fff; color: #000; font-family: monospace; }
+    .copy-action { background: #000; color: #fff; padding: 10px 20px; font-size: 14px; font-weight: 600; }
+    .is-copied .copy-action { background: #0ca678; }
+
+    /* 按钮 */
+    .action-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .btn { padding: 16px; border-radius: 12px; text-decoration: none !important; font-weight: 700; text-align: center; transition: all 0.2s; }
+    .main-btn { background: #000; color: #fff !important; font-size: 17px; }
+    .main-btn:hover { opacity: 0.85; }
+    .sub-btn { background: #fff; color: #000 !important; border: 2px solid #000; font-size: 17px; }
+    .sub-btn:hover { background: #f0f0f0; }
+
+    /* 响应式 */
+    @media (max-width: 500px) {
+        .action-row { grid-template-columns: 1fr; }
+        .okx-card-final { padding: 20px; }
+        .code-text { font-size: 18px; padding: 10px 15px; }
+    }
+</style>

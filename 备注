@@ -1,0 +1,7 @@
+运行命令：npm run dev
+
+
+欧易卡片：
+import OKXCard from '@/components/OKXCard.astro';
+
+<OKXCard />

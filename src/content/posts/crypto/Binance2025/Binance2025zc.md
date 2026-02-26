@@ -1,7 +1,7 @@
 ---
 title: "Binance币安注册及KYC实名认证教程"
 published: 2025-10-08
-description: "2025最新新币安交易所注册教程"
+description: "2025最新币安交易所注册教程"
 category: "推荐"
 tags: [交易所, binance,币圈] 
 slug: "binance-register-tutorial"  # 如果有这个，URL会使用这个
