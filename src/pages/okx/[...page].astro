@@ -7,18 +7,20 @@ import MainGridLayout from "@/layouts/MainGridLayout.astro";
 import { getCollection } from 'astro:content';
 
 export const getStaticPaths = (async ({ paginate }) => {
-    // 定义AI相关的关键词，用于筛选文章
-    const AI_KEYWORDS = ['ai', 'chatgpt', 'gpt', 'gemini'];
-    
     // 获取所有文章
     const allPosts = await getCollection('posts');
     
-    // 筛选包含AI相关关键词的文章
-    const aiPosts = allPosts.filter(post => {
+    // 筛选加密货币相关文章
+    const cryptoPosts = allPosts.filter(post => {
+        // 按分类筛选
+        if (post.data.category === 'crypto') return true;
+        
+        // 按标签筛选（可自行扩展）
+        const cryptoKeywords = ['欧易'];
         const tags = post.data.tags || [];
         const title = (post.data.title || '').toLowerCase();
         
-        return AI_KEYWORDS.some(keyword => {
+        return cryptoKeywords.some(keyword => {
             const keywordLower = keyword.toLowerCase();
             return title.includes(keywordLower) ||
                    tags.some(tag => String(tag).toLowerCase().includes(keywordLower));
@@ -26,8 +28,8 @@ export const getStaticPaths = (async ({ paginate }) => {
     });
     
     // 按发布时间倒序排序（最新的在前）
-    // ⬇️ 修复：这里改成 [...aiPosts] ⬇️
-    const sortedPosts = [...aiPosts].sort((a, b) => {
+    // ⬇️ 修改这里的排序逻辑 ⬇️
+    const sortedPosts = [...cryptoPosts].sort((a, b) => {
         // 1. 获取置顶状态，如果没有设置默认当做 false
         const aPinned = a.data.isPinned || false;
         const bPinned = b.data.isPinned || false;
@@ -39,6 +41,7 @@ export const getStaticPaths = (async ({ paginate }) => {
         // 3. 如果状态相同（都是置顶，或者都不是置顶），则按发布时间倒序排序（最新的在前）
         return new Date(b.data.published).getTime() - new Date(a.data.published).getTime();
     });
+    
     // 返回分页路径
     return paginate(sortedPosts, { pageSize: PAGE_SIZE });
 }) satisfies GetStaticPaths;
@@ -46,35 +49,40 @@ export const getStaticPaths = (async ({ paginate }) => {
 // 从props中获取当前页面的分页数据
 const { page } = Astro.props;
 
-// 在组件模板中需要使用的AI关键词
-const DISPLAY_KEYWORDS = ['AI', 'ChatGPT', 'GPT', 'Gemini'];
+// 显示标签（可自行修改添加）
+const DISPLAY_TAGS = ['比特币', '以太坊', '区块链', 'DeFi', '交易所'];
 ---
 
-<MainGridLayout title={'AI攻略'}> 
+<MainGridLayout title={'欧易交易所'}>
+    <!-- 专栏标题区域 -->
     <div class="mb-8">
-        <h1 class="text-3xl font-bold mb-2">AI攻略专栏</h1>
+        <h1 class="text-3xl font-bold mb-2">欧易okx交易所</h1>
         <p class="text-gray-600 dark:text-gray-400 mb-4">
-            这里汇集AI工具使用教程
+            欧易交易所注册教程，20%手续费优惠邀请码：ok1388
         </p>
         
     </div>
     
+    <!-- 文章内容区域 -->
     {page?.data?.length > 0 ? (
         <>
+            <!-- 文章列表 -->
             <PostPage page={page}></PostPage>
             
+            <!-- 分页组件 -->
             <Pagination 
                 class="mx-auto onload-animation" 
                 page={page}
             ></Pagination>
         </>
     ) : (
+        <!-- 无文章时的提示 -->
         <div class="text-center py-16">
             <h2 class="text-xl font-semibold mb-3 text-gray-700 dark:text-gray-300">
-                暂无AI相关文章
+                暂无加密货币相关文章
             </h2>
             <p class="text-gray-500 dark:text-gray-400 mb-6">
-                当前检索标签：{DISPLAY_KEYWORDS.join('、')}
+                当前检索标签：{DISPLAY_TAGS.join('、')}
             </p>
         </div>
     )}

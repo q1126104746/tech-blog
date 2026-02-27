@@ -1,0 +1,115 @@
+---
+// src/components/PromoTable.astro
+---
+
+<div class="promo-table-wrapper">
+  <table>
+    <thead>
+      <tr>
+        <th>平台名称</th>
+        <th>核心优势与特点</th>
+        <th>适合人群</th>
+        <th class="text-center">注册与专属邀请码</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <span class="brand-name okx">欧易 (OKX)</span><br/>
+          <span class="sub-label">综合体验最佳</span>
+        </td>
+        <td class="desc">网络连通性极佳，国内直连通常无压力。<strong>Web3 钱包功能地表最强</strong>，风控严，冻卡风险低。</td>
+        <td class="audience">所有新手小白、资金量大的老玩家</td>
+        <td class="action-cell">
+          <div class="tb-copy-btn" data-code="ok1388">
+            邀请码: <code>ok1388</code> <span class="tb-copy-text">复制</span>
+          </div>
+          <a href="https://bn1688.cc/okx" target="_blank" class="reg-btn okx-btn">前往官网注册</a>
+        </td>
+      </tr>
+      <tr class="alt-row">
+        <td>
+          <span class="brand-name binance">币安 (Binance)</span><br/>
+          <span class="sub-label">全球深度第一</span>
+        </td>
+        <td class="desc">现货与合约交易深度无人能敌。理财产品丰富，IEO（打新）造富效应强。</td>
+        <td class="audience">追求极限流动性、全阶交易员</td>
+        <td class="action-cell">
+          <div class="tb-copy-btn" data-code="BN528">
+            邀请码: <code>BN528</code> <span class="tb-copy-text">复制</span>
+          </div>
+          <a href="https://bn1688.cc/bian" target="_blank" class="reg-btn binance-btn">前往官网注册</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <span class="brand-name gate">Gate.io</span><br/>
+          <span class="sub-label">早期百倍币摇篮</span>
+        </td>
+        <td class="desc">老牌交易所，<strong>上新币速度极快，小币种最全</strong>。很多热门 Meme 币都能在这里找到。</td>
+        <td class="audience">喜欢以小博大、埋伏早期山寨币的玩家</td>
+        <td class="action-cell">
+          <div class="tb-copy-btn" data-code="JMLAOLIA">
+            邀请码: <code>JMLAOLIA</code> <span class="tb-copy-text">复制</span>
+          </div>
+          <a href="https://bn1688.cc/gate" target="_blank" class="reg-btn gate-btn">前往官网注册</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .promo-table-wrapper { overflow-x: auto; margin: 24px 0; border: 1px solid #e5e7eb; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+  table { width: 100%; border-collapse: collapse; font-family: ui-sans-serif, system-ui, sans-serif; font-size: 14px; background: #fff; text-align: left; }
+  thead tr { background-color: #f9fafb; border-bottom: 2px solid #e5e7eb; }
+  th { padding: 16px; color: #374151; font-weight: 700; }
+  td { padding: 16px; vertical-align: middle; }
+  .alt-row { background-color: #fafafa; }
+  .brand-name { font-weight: 800; font-size: 16px; }
+  .okx { color: #000; }
+  .binance { color: #f3ba2f; }
+  .gate { color: #01ce83; }
+  .sub-label { font-size: 12px; font-weight: 400; color: #888; }
+  .desc { color: #4b5563; line-height: 1.6; }
+  .audience { color: #059669; font-weight: 600; }
+  .action-cell { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
+  
+  .tb-copy-btn { display: inline-block; background: #fdfdfd; border: 1px dashed #aaa; padding: 4px 10px; border-radius: 6px; font-size: 12px; color: #555; cursor: pointer; transition: all 0.2s ease; }
+  .tb-copy-btn:hover { border-color: #000; background: #f0f0f0; color: #000; }
+  code { font-family: monospace; font-weight: 800; font-size: 14px; color: #000; background: none; padding: 0; }
+  .tb-copy-text { margin-left: 6px; background: #eee; padding: 2px 6px; border-radius: 4px; font-size: 10px; }
+  
+  .reg-btn { display: block; width: 100%; max-width: 140px; color: #fff; text-decoration: none; padding: 10px 0; border-radius: 8px; font-weight: 600; font-size: 14px; transition: opacity 0.2s; }
+  .okx-btn { background-color: #000; }
+  .binance-btn { background-color: #fcd535; color: #1e2329; }
+  .gate-btn { background-color: #01ce83; }
+
+  /* 成功状态 */
+  :global(.tb-copy-btn.success) { border-color: #0ca678 !important; background: #e6fcf5 !important; color: #0ca678 !important; }
+  :global(.tb-copy-btn.success .tb-copy-text) { background: #0ca678 !important; color: #fff !important; }
+</style>
+
+<script>
+  document.querySelectorAll('.tb-copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      // 这里的 btn 已经是当前的 DOM 元素了，不需要用 this
+      const code = btn.getAttribute('data-code'); 
+      if (code) {
+        navigator.clipboard.writeText(code).then(() => {
+          const textSpan = btn.querySelector('.tb-copy-text');
+          if (textSpan instanceof HTMLElement) { // 加上 TS 检查更严谨
+            const oldText = textSpan.innerText;
+            textSpan.innerText = '已复制';
+            btn.classList.add('success');
+            
+            setTimeout(() => {
+              textSpan.innerText = oldText;
+              btn.classList.remove('success');
+            }, 2000);
+          }
+        });
+      }
+    });
+  });
+</script>

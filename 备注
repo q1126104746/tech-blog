@@ -3,5 +3,9 @@
 
 欧易卡片：
 import OKXCard from '@/components/OKXCard.astro';
-
 <OKXCard />
+
+币安卡片：
+import BinanceCard from '@/components/BinanceCard.astro';
+
+<BinanceCard />

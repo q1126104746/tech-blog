@@ -80,20 +80,20 @@ export const navBarConfig: NavBarConfig = {
 		},
 
 		// 4. 黄金外汇（站内栏目）
-		// {
-		// 	name: "黄金外汇",
-		// 	url: "/forex/",
-		// 	external: false,
-		// 	// icon: "ph:chart-line-up", // 可选：添加趋势图标
-		// },
+		{
+			name: "币安Binance",
+			url: "/Binance/",
+			external: false,
+			// icon: "ph:chart-line-up", // 可选：添加趋势图标
+		},
 
 		// 5. K线技术（站内栏目）
-		// {
-		// 	name: "K线技术",
-		// 	url: "/kline/",
-		// 	external: false,
-		// 	// icon: "ph:candlestick-chart", // 可选：添加K线图图标
-		// },
+		{
+			name: "欧易OKX",
+			url: "/okx/",
+			external: false,
+			// icon: "ph:candlestick-chart", // 可选：添加K线图图标
+		},
 
 		// 6. 软件分享（站内栏目）
 		// {

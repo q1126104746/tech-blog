@@ -7,9 +7,28 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
 import { getSortedPosts } from "../utils/content-utils";
 
 export const getStaticPaths = (async ({ paginate }) => {
-	const allBlogPosts = await getSortedPosts();
-	const sorted1 = allBlogPosts.filter((post) => !post.data.hidden);
-	return paginate(sorted1, { pageSize: PAGE_SIZE });
+    // 1. 获取所有文章
+    const allBlogPosts = await getSortedPosts();
+    
+    // 2. 过滤掉隐藏的文章
+    const visiblePosts = allBlogPosts.filter((post) => !post.data.hidden);
+    
+    // ⬇️ 3. 添加置顶和时间排序逻辑 ⬇️
+    const sortedPosts = visiblePosts.sort((a, b) => {
+        // 获取置顶状态，如果没有设置默认当做 false
+        const aPinned = a.data.isPinned || false;
+        const bPinned = b.data.isPinned || false;
+
+        // 如果只有其中一个是置顶，置顶的排在前面 (-1 表示前移，1 表示后移)
+        if (aPinned && !bPinned) return -1;
+        if (!aPinned && bPinned) return 1;
+
+        // 如果状态相同（都是置顶，或者都不是置顶），则按发布时间倒序排序（最新的在前）
+        return new Date(b.data.published).getTime() - new Date(a.data.published).getTime();
+    });
+    
+    // 4. 返回分页路径，注意这里传入的是排序后的 sortedPosts
+    return paginate(sortedPosts, { pageSize: PAGE_SIZE });
 }) satisfies GetStaticPaths;
 // https://github.com/withastro/astro/issues/6507#issuecomment-1489916992
 
@@ -20,5 +39,9 @@ const len = page.data.length;
 
 <MainGridLayout>
     <PostPage page={page}></PostPage>
-    <Pagination class="mx-auto onload-animation" page={page} style={`animation-delay: calc(var(--content-delay) + ${(len)*50}ms)`}></Pagination>
+    <Pagination 
+        class="mx-auto onload-animation" 
+        page={page} 
+        style={`animation-delay: calc(var(--content-delay) + ${(len)*50}ms)`}
+    ></Pagination>
 </MainGridLayout>

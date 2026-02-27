@@ -1,0 +1,151 @@
+---
+// src/components/BinanceCard.astro
+const { 
+  inviteCode = "BN528", 
+  mainLink = "https://www.binance.com/zh-CN/join?ref=BN528",
+  backupLink = "https://bn1688.cc/bian",
+  logoUrl = "" // 如果你有币安logo链接可以传入
+} = Astro.props;
+---
+
+<div class="binance-card-final">
+    <div class="card-header">
+        <div class="brand">
+            {logoUrl ? (
+                <img src={logoUrl} alt="Binance Logo" class="logo-img" />
+            ) : (
+                <div class="logo-box">
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                        <path d="M16.624 13.9202l2.7175 2.7154-7.353 7.353-7.353-7.352 2.7175-2.7164 4.6355 4.6595 4.6356-4.6595zm4.6366-4.6366L24 12l-2.7394 2.7154-2.7384-2.7154 2.7384-2.7164zM7.376 10.0798L4.6585 7.3644 12 0l7.353 7.352-2.7175 2.7164-4.6355-4.6595-4.6356 4.6595zm-4.6366 4.6366L0 12l2.7394-2.7154 2.7384 2.7154-2.7384 2.7164zM12 15.84l-3.84-3.84 3.84-3.84 3.84 3.84-3.84 3.84z"/>
+                    </svg>
+                </div>
+            )}
+            <div class="title-area">
+                <h2 class="title">币安 Binance</h2>
+                <span class="subtitle">全球交易量第一的数字货币交易所</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="intro-content">
+        <p>币安（Binance）是全球领先的区块链生态系统与加密货币基础设施提供商。为全球数以千万计的用户提供安全、可靠的数字资产交易、投资、支付及衍生品服务。平台生态涵盖现货、合约、理财、Web3 钱包及币安智能链（BSC）等，是进入加密世界的首选门户。</p>
+    </div>
+
+    <div class="promo-section">
+        <div class="promo-header">
+            <span class="promo-title">独家注册邀请码</span>
+            <span class="promo-benefit">享受 20% 手续费减免</span>
+        </div>
+        <div class="copy-box" id="binanceCopyBtn" data-code={inviteCode} title="点击复制邀请码">
+            <code class="code-text">{inviteCode}</code>
+            <div class="copy-action">
+                <span class="action-text">点击复制</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="action-row">
+        <a href={mainLink} target="_blank" class="btn main-btn">官网注册入口</a>
+        <a href={backupLink} target="_blank" class="btn sub-btn">免翻墙地址</a>
+    </div>
+</div>
+
+<script>
+    // 使用特定的ID避免与其他卡片脚本冲突
+    const copyBtn = document.getElementById('binanceCopyBtn');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', () => {
+            const code = copyBtn.getAttribute('data-code');
+            if (code) {
+                navigator.clipboard.writeText(code).then(() => {
+                    const actionText = copyBtn.querySelector('.action-text');
+                    if (actionText) {
+                        actionText.textContent = '已复制成功！';
+                        copyBtn.classList.add('is-copied');
+                        setTimeout(() => {
+                            actionText.textContent = '点击复制';
+                            copyBtn.classList.remove('is-copied');
+                        }, 2000);
+                    }
+                });
+            }
+        });
+    }
+</script>
+
+<style>
+    /* 针对深色模式和浅色模式的适配 */
+    :root {
+        --binance-yellow: #FCD535;
+        --binance-yellow-hover: #e5c02b;
+        --binance-dark: #181A20;
+    }
+
+    .binance-card-final {
+        border: 1px solid var(--binance-dark);
+        border-radius: 16px;
+        padding: 30px;
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        background: #fff;
+        max-width: 650px;
+        margin: 2rem auto;
+        box-shadow: 8px 8px 0px rgba(24, 26, 32, 0.05);
+    }
+
+    /* 头部 */
+    .card-header { display: flex; align-items: center; margin-bottom: 20px; }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .logo-box { width: 40px; height: 40px; background: var(--binance-yellow); color: var(--binance-dark); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+    .logo-img { width: 40px; height: 40px; border-radius: 8px; object-fit: contain; }
+    .title { margin: 0 !important; font-size: 24px !important; font-weight: 800 !important; border: none !important; color: var(--binance-dark) !important; line-height: 1.1 !important; }
+    .subtitle { font-size: 13px; color: #666; margin-top: 2px; }
+
+    /* 简介 */
+    .intro-content { font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 25px; background: #f8f9fa; padding: 15px; border-radius: 10px; }
+    .intro-content p { margin: 0; }
+
+    /* 推广/复制区域 */
+    .promo-section { margin-bottom: 25px; text-align: center; }
+    .promo-header { margin-bottom: 12px; display: flex; flex-direction: column; gap: 4px; }
+    .promo-title { font-size: 14px; color: #888; }
+    .promo-benefit { font-size: 17px; color: #e63946; font-weight: 800; }
+    
+    .copy-box {
+        display: inline-flex; align-items: center; border: 2px solid var(--binance-dark); border-radius: 12px; overflow: hidden; cursor: pointer; transition: all 0.2s;
+    }
+    .copy-box:hover { transform: scale(1.02); }
+    .copy-box.is-copied { border-color: #0ca678; }
+    .code-text { padding: 10px 25px; font-size: 22px; font-weight: 800; background: #fff; color: var(--binance-dark); font-family: monospace; }
+    .copy-action { background: var(--binance-dark); color: var(--binance-yellow); padding: 10px 20px; font-size: 14px; font-weight: 600; }
+    .is-copied .copy-action { background: #0ca678; color: #fff; }
+
+    /* 按钮 */
+    .action-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .btn { padding: 16px; border-radius: 12px; text-decoration: none !important; font-weight: 700; text-align: center; transition: all 0.2s; }
+    .main-btn { background: var(--binance-yellow); color: var(--binance-dark) !important; font-size: 17px; }
+    .main-btn:hover { background: var(--binance-yellow-hover); }
+    .sub-btn { background: #fff; color: var(--binance-dark) !important; border: 2px solid var(--binance-dark); font-size: 17px; }
+    .sub-btn:hover { background: #f0f0f0; }
+
+    /* 响应式 */
+    @media (max-width: 500px) {
+        .action-row { grid-template-columns: 1fr; }
+        .binance-card-final { padding: 20px; }
+        .code-text { font-size: 18px; padding: 10px 15px; }
+    }
+
+    /* 深色模式适配 (如果你的博客支持) */
+    html.dark .binance-card-final {
+        background: #1e1e1e;
+        border-color: #333;
+        box-shadow: none;
+    }
+    html.dark .title { color: #fff !important; }
+    html.dark .subtitle { color: #aaa; }
+    html.dark .intro-content { background: #2a2a2a; color: #ddd; }
+    html.dark .copy-box { border-color: #555; }
+    html.dark .code-text { background: #1e1e1e; color: #fff; }
+    html.dark .copy-action { background: #333; }
+    html.dark .sub-btn { background: #1e1e1e; color: #fff !important; border-color: #555; }
+    html.dark .sub-btn:hover { background: #2a2a2a; }
+</style>
